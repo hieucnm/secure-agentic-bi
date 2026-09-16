@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure Agentic BI Gateway | G6</title>
+<style>
+  :root { --ink:#14212b; --muted:#5d6a73; --paper:#f5f1e8; --panel:#fffdf8; --line:#d9d2c5; --teal:#007c78; --teal-soft:#dff2ee; --coral:#d85c47; --coral-soft:#fae4dd; --gold:#b87a12; --gold-soft:#f8edcf; --navy:#173e55; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family: Georgia, 'Times New Roman', serif; }
+  main { width:min(1500px, 100%); min-height:100vh; margin:auto; padding:30px 42px 26px; display:grid; grid-template-rows:auto 1fr auto; gap:20px; }
+  header { display:flex; justify-content:space-between; align-items:end; border-bottom:2px solid var(--ink); padding-bottom:15px; }
+  .eyebrow { font:700 12px/1.1 Arial, sans-serif; letter-spacing:1.4px; text-transform:uppercase; color:var(--teal); margin-bottom:7px; }
+  h1 { font-size:clamp(28px, 3vw, 46px); line-height:1; margin:0; font-weight:700; }
+  .subtitle { max-width:500px; margin:0; color:var(--muted); font:15px/1.4 Arial, sans-serif; text-align:right; }
+  .layout { display:grid; grid-template-columns:minmax(650px, 1.75fr) minmax(320px, .8fr); gap:24px; min-height:0; }
+  .architecture { position:relative; display:grid; grid-template-columns:1fr 1.3fr 1fr; grid-template-rows:auto auto auto auto; gap:13px; align-content:center; padding:20px; border:1px solid var(--line); background:var(--panel); overflow:hidden; }
+  .node { position:relative; z-index:2; border:1.5px solid var(--ink); padding:12px 14px; background:#fffdfa; box-shadow:4px 4px 0 rgba(20,33,43,.08); }
+  .node h2,.node h3 { margin:0 0 5px; font-size:17px; line-height:1.05; }
+  .node p { margin:0; font:12px/1.35 Arial,sans-serif; color:var(--muted); }
+  .user { grid-column:1; grid-row:1; border-color:var(--navy); }
+  .agent { grid-column:2; grid-row:1; background:var(--teal-soft); border-color:var(--teal); }
+  .memory { grid-column:3; grid-row:1; background:var(--gold-soft); border-color:var(--gold); }
+  .gateway { grid-column:1 / 4; grid-row:2; background:var(--navy); color:#fff; border-color:var(--navy); display:grid; grid-template-columns:1.4fr 1fr; gap:15px; align-items:center; }
+  .gateway p { color:#dce9ed; }.gateway .tag { color:#e3bd68; }
+  .tools { grid-column:1 / 4; grid-row:3; display:grid; grid-template-columns:repeat(3, 1fr); gap:13px; }
+  .tool { min-height:118px; }
+  .sql { background:var(--coral-soft); border-color:var(--coral); }.schema { background:#e8f1f6; border-color:var(--navy); }.analytics { background:var(--gold-soft); border-color:var(--gold); }
+  .return { grid-column:1 / 4; grid-row:4; background:var(--teal-soft); border-color:var(--teal); display:grid; grid-template-columns:1fr 1.1fr; gap:15px; }
+  .tag { display:inline-block; font:700 10px/1 Arial,sans-serif; letter-spacing:.8px; text-transform:uppercase; margin-bottom:6px; color:var(--teal); }
+  .flow-map { position:absolute; inset:0; z-index:1; width:100%; height:100%; pointer-events:none; }
+  .flow-map path { fill:none; stroke:var(--ink); stroke-width:2.4; opacity:.7; marker-end:url(#arrowhead); }
+  .side { display:flex; flex-direction:column; gap:13px; }
+  .callout { border-left:5px solid var(--teal); padding:13px 14px; background:rgba(255,253,248,.7); }
+  .callout.security { border-color:var(--coral); }.callout.eval { border-color:var(--gold); }
+  .callout h2 { font-size:16px; margin:0 0 7px; }.callout p,.callout li { font:13px/1.42 Arial,sans-serif; color:var(--muted); }.callout p { margin:0; }.callout ul { margin:7px 0 0; padding-left:18px; }
+  .axes { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:7px; }.axis { padding:9px; font:700 11px/1.25 Arial,sans-serif; background:var(--teal-soft); border:1px solid #a9d8cf; }.axis:nth-child(2){background:var(--gold-soft);border-color:#ead294}.axis:nth-child(3){background:var(--coral-soft);border-color:#edbbaf}
+  footer { display:flex; justify-content:space-between; gap:20px; border-top:1px solid var(--line); padding-top:13px; font:12px/1.35 Arial,sans-serif; color:var(--muted); }.claim { color:var(--ink); max-width:850px; }.claim b { color:var(--teal); }
+  @media (max-width:900px) { main{padding:22px 18px}.layout{grid-template-columns:1fr}.subtitle{text-align:left}.architecture{grid-template-columns:1fr;}.user,.agent,.memory,.gateway,.tools,.return{grid-column:1}.user{grid-row:1}.agent{grid-row:2}.memory{grid-row:3}.gateway{grid-row:4}.tools{grid-row:5;grid-template-columns:1fr}.return{grid-row:6}.arrow{display:none}header,footer{display:block}.subtitle{margin-top:10px}footer p{margin:0 0 8px} }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div><div class="eyebrow">CO5151 | Group G6 | Application Track</div><h1>Secure Agentic BI Gateway</h1></div>
+    <p class="subtitle">Natural-language analytics that remains useful when requests are ambiguous, data is untrusted, and database permissions matter.</p>
+  </header>
+  <section class="layout">
+    <section class="architecture" aria-label="Secure Agentic BI architecture">
+      <svg class="flow-map" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#14212b" /></marker>
+        </defs>
+        <path d="M285 112 H330" />
+        <path d="M685 112 H730" />
+        <path d="M775 145 H705" />
+        <path d="M500 165 V220" />
+        <path d="M500 310 V370" />
+        <path d="M500 485 V545" />
+      </svg>
+      <div class="node user" id="user"><span class="tag">Input</span><h2>User + role</h2><p>Business question and authenticated role: Marketing, Analyst, or SecOps.</p></div>
+      <div class="node agent" id="agent"><span class="tag">Planning + Reflection</span><h2>BI Agent Orchestrator</h2><p>Plans schema/tool use, interprets structured feedback, repairs a blocked plan or gives a safe refusal.</p></div>
+      <div class="node memory" id="memory"><span class="tag">R3 memory</span><h2>Approved Template Store</h2><p>Retrieves safe query patterns only. Writes only after successful policy-approved execution; never stores raw table text.</p></div>
+      <div class="node gateway" id="gateway"><div><span class="tag">MCP boundary + Guardrails</span><h2>Security Gateway</h2><p>Every tool call carries user role, request scope, timeout, and audit ID. It returns structured allow/block reasons to the agent.</p></div><div><span class="tag">Enforcement</span><p>Allow only registered tools, validate inputs, apply table/column policy, enforce limits, and log each decision.</p></div></div>
+      <div class="tools" id="tools">
+        <div class="node tool schema"><span class="tag">Read-only MCP tool</span><h3>get_schema</h3><p>Returns only role-visible tables and columns, not the whole database schema.</p></div>
+        <div class="node tool sql" id="sql"><span class="tag">Scoped read-only MCP tool</span><h3>execute_sql</h3><p>Parse AST; permit one SELECT; check table/column allowlist, row limit and timeout; use role-bound read-only DB view.</p></div>
+        <div class="node tool analytics"><span class="tag">Extension</span><h3>pandas_analytics</h3><p>Consumes policy-checked result handles in an ephemeral, network-disabled container. Export requires confirmation.</p></div>
+      </div>
+      <div class="node return" id="taint"><div><span class="tag">Untrusted result boundary</span><h2>Provenance and minimization</h2><p>Text from tickets, feedback, and notes is labelled untrusted, bounded, and never treated as tool instructions.</p></div><div><span class="tag">Back to agent</span><p>Safe result summary or structured block reason informs reflection. The agent cannot obtain new permissions from retrieved text.</p></div></div>
+    </section>
+    <aside class="side">
+      <section class="callout" id="why-agent"><h2>Why an agent, not a script?</h2><p>The system must choose relevant schema and tools, recover from malformed or blocked actions, and explain safe partial answers for open-ended business requests.</p></section>
+      <section class="callout security" id="security"><h2>Threat model v0</h2><p><b>Assets:</b> PII/salary confidentiality and database integrity.<br><b>Untrusted inputs:</b> user prompts and text retrieved from tickets/feedback.<br><b>Core mitigation:</b> permissions are enforced outside the LLM at the MCP gateway and DB connection.</p></section>
+      <section class="callout"><h2>Three advanced axes</h2><div class="axes" id="axes"><div class="axis">Planning<br>and search</div><div class="axis">Reflection<br>and verification</div><div class="axis">Guardrails</div></div></section>
+      <section class="callout eval" id="evaluation"><h2>Evaluation promise</h2><ul><li>20+ realistic utility tasks</li><li>10+ direct/indirect injection cases</li><li>A/B/C ablation, 3 seeds</li><li>Task success, unsafe exposure/action, false refusal, cost, latency</li></ul></section>
+      <section class="callout" id="scope"><h2>Feasible MVP by W7</h2><p>SQL gateway, 3 roles, 6--10 tables, policy tests and audit demo. Pandas sandbox and guarded export are extensions, not the critical path.</p></section>
+    </aside>
+  </section>
+  <footer><p class="claim"><b>Project claim:</b> a policy-enforced MCP gateway can preserve useful agentic BI while reducing unsafe data exposure and actions from over-privileged queries and untrusted table content.</p><p>All tools are designed around free/open-source components.<br>Architecture reference for proposal pitch.</p></footer>
+</main>
+</body>
+</html>

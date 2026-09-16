@@ -1,0 +1,112 @@
+\section{Tự đánh giá chất lượng đề tài (Topic-Quality Gate)}
+
+\begin{itemize}
+\item \textbf{Tính Mới (Novel):} Đề tài hướng tới xây dựng một Secure BI Agent cho phép truy vấn và phân tích dữ liệu bằng ngôn ngữ tự nhiên, đồng thời tích hợp bảo mật ngay trong quá trình Agent tương tác với dữ liệu. Điểm mới tập trung vào việc kết hợp kiểm soát quyền truy cập ở cấp truy vấn với cơ chế phát hiện và giảm thiểu Indirect Prompt Injection từ nội dung dữ liệu.
+
+\item \textbf{Tính Không Tầm Thường (Non-trivial):} Bài toán yêu cầu phối hợp nhiều khả năng của AI Agent, bao gồm lập kế hoạch, thực thi công cụ, tự kiểm tra và sửa lỗi, cùng các cơ chế kiểm soát an toàn cho SQL và môi trường phân tích dữ liệu.
+
+\item \textbf{Ý nghĩa (Meaningful):} Đề tài giải quyết một rào cản quan trọng khi doanh nghiệp triển khai các hệ thống ``Chat with Data'': làm thế nào để người dùng có thể khai thác dữ liệu thuận tiện mà không làm gia tăng nguy cơ truy cập trái phép, rò rỉ thông tin hoặc bị thao túng bởi dữ liệu độc hại.
+
+\item \textbf{Tính Khả Thi (Feasible):} Phạm vi nghiên cứu được giới hạn ở dữ liệu quan hệ và các tác vụ phân tích dữ liệu phổ biến. Nhóm sử dụng các framework và benchmark hiện có, kết hợp với các kịch bản kiểm thử bảo mật được xây dựng có kiểm soát.
+
+\end{itemize}
+
+\section{Bài toán \& Người dùng mục tiêu}
+
+\subsection{Phát biểu bài toán}
+
+Các hệ thống BI truyền thống yêu cầu người dùng có kiến thức về SQL hoặc phải phụ thuộc vào đội ngũ kỹ thuật để truy xuất dữ liệu. LLM Agent có thể đơn giản hóa quá trình này bằng cách chuyển đổi yêu cầu ngôn ngữ tự nhiên thành truy vấn và thực hiện các tác vụ phân tích.
+
+Tuy nhiên, việc cho phép Agent tương tác trực tiếp với dữ liệu doanh nghiệp tạo ra hai vấn đề quan trọng. Thứ nhất, Agent có thể truy cập nhiều dữ liệu hơn mức cần thiết nếu không có cơ chế phân quyền phù hợp. Thứ hai, nội dung dữ liệu do người dùng hoặc hệ thống bên ngoài tạo ra có thể chứa các chỉ thị độc hại, dẫn đến Indirect Prompt Injection khi được đưa vào context của Agent.
+
+Do đó, bài toán của đề tài là xây dựng một hệ thống BI Agent vừa hỗ trợ truy vấn và phân tích dữ liệu bằng ngôn ngữ tự nhiên, vừa có khả năng kiểm soát quyền truy cập và bảo vệ Agent trước các rủi ro bảo mật phát sinh từ dữ liệu.
+
+\subsection{Người dùng mục tiêu \& Giá trị mang lại}
+
+\begin{itemize}
+\item \textbf{Data Analysts:} Có thể khám phá và phân tích dữ liệu nhanh hơn thông qua ngôn ngữ tự nhiên mà không cần viết toàn bộ truy vấn thủ công.
+
+\item \textbf{Business Users:} Có thể tự chủ thực hiện các truy vấn và phân tích nghiệp vụ cơ bản mà giảm phụ thuộc vào đội ngũ kỹ thuật.
+
+\item \textbf{SecOps/DBAs:} Có một lớp kiểm soát tập trung để đảm bảo Agent tuân thủ chính sách truy cập và giảm thiểu các rủi ro khi kết nối AI với dữ liệu doanh nghiệp.
+
+\end{itemize}
+
+\section{Các hệ thống liên quan \& Khoảng trống kỹ thuật}
+
+Các hệ thống Text-to-SQL và Data Agent hiện nay đã cho phép người dùng tương tác với cơ sở dữ liệu bằng ngôn ngữ tự nhiên và thực hiện các tác vụ phân tích phức tạp. Các nghiên cứu về Agent Security cũng đã đề xuất nhiều phương pháp nhằm phát hiện prompt injection và kiểm soát hành vi của Agent.
+
+Tuy nhiên, các hướng tiếp cận này thường tập trung riêng vào khả năng phân tích dữ liệu hoặc bảo mật Agent. Các hệ thống BI Agent phổ biến chưa giải quyết đầy đủ trường hợp Agent vừa cần truy cập dữ liệu doanh nghiệp theo quyền hạn của người dùng, vừa phải đối phó với các chỉ thị độc hại nằm trong chính nội dung dữ liệu được truy xuất.
+
+\noindent\textbf{Khoảng trống kỹ thuật (Gap):} Đề tài tập trung vào việc kết hợp khả năng phân tích dữ liệu bằng ngôn ngữ tự nhiên với các cơ chế bảo mật dành riêng cho môi trường BI, đặc biệt là kiểm soát quyền truy cập và giảm thiểu Indirect Prompt Injection từ dữ liệu.
+
+\section{Giải pháp đề xuất \& Các đóng góp kỹ thuật}
+
+Đề tài đề xuất một \textbf{Secure Multi-Agent BI Framework}, trong đó các Agent chuyên biệt phối hợp để xử lý yêu cầu của người dùng, trong khi các tương tác với dữ liệu được kiểm soát bởi một lớp bảo mật trung gian.
+
+Hệ thống tập trung vào bốn đóng góp chính:
+
+\begin{enumerate}
+\item \textbf{Secure Data Access:} Áp dụng nguyên tắc Least Privilege để đảm bảo Agent chỉ có thể truy cập dữ liệu phù hợp với vai trò và yêu cầu hiện tại của người dùng.
+
+\item \textbf{SQL-level Security:} Phân tích và kiểm tra các truy vấn trước khi thực thi nhằm ngăn chặn các thao tác hoặc truy cập vượt quá chính sách cho phép.
+
+\item \textbf{Protection against Indirect Prompt Injection:} Kiểm tra nội dung dữ liệu được truy xuất trước khi đưa trở lại context của Agent, nhằm giảm khả năng dữ liệu độc hại thao túng quá trình suy luận.
+
+\item \textbf{Reliable Agent Execution:} Kết hợp planning, reasoning, tool execution và self-correction để Agent có thể xử lý các tác vụ phân tích nhiều bước và phục hồi khi một thao tác bị từ chối hoặc thất bại.
+
+\end{enumerate}
+
+Các cơ chế trên được thiết kế theo hướng tách biệt giữa khả năng suy luận của Agent và quyền thực thi thực tế, qua đó giảm tác động khi Agent sinh ra truy vấn sai hoặc bị thao túng.
+
+\section{Đánh giá định lượng \& Kiểm chứng an toàn}
+
+Nhóm sẽ xây dựng một tập tác vụ gồm cả \textbf{functional tasks} và \textbf{security/adversarial tasks}. Functional tasks đánh giá khả năng thực hiện các yêu cầu phân tích dữ liệu từ đơn giản đến phức tạp, trong khi security tasks kiểm tra khả năng chống lại prompt injection, truy cập vượt quyền và các hành vi thực thi không an toàn.
+
+Các chỉ số đánh giá chính gồm:
+
+\begin{itemize}
+\item \textbf{Utility:} Độ chính xác của kết quả và khả năng hoàn thành tác vụ.
+\item \textbf{Security:} Khả năng ngăn chặn các cuộc tấn công và duy trì đúng phạm vi quyền truy cập.
+\item \textbf{Efficiency:} Độ trễ và chi phí thực thi.
+\end{itemize}
+
+Nhóm cũng thực hiện \textbf{ablation study} để so sánh hệ thống đề xuất với các cấu hình đơn giản hơn. Mục tiêu là xác định mức đóng góp của lớp bảo mật và kiến trúc Multi-Agent đối với độ chính xác, khả năng chống tấn công và hiệu năng.
+
+Bên cạnh đánh giá định lượng, nhóm sẽ thực hiện security walkthrough và red-team testing với các kịch bản đại diện cho người dùng thông thường, người dùng vô tình vượt quyền và kẻ tấn công cố ý. Kết quả sẽ được sử dụng để kiểm chứng cả tính hữu ích và khả năng bảo vệ của hệ thống trong các tình huống thực tế.
+
+\section{Kế hoạch dự án, rủi ro \& phương án dự phòng}
+
+\subsection{Kế hoạch dự án}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|p{2.3cm}|p{9.5cm}|p{2.5cm}|}
+\hline
+\textbf{Giai đoạn} & \textbf{Mục tiêu chính} & \textbf{Deliverable} \\ \hline
+W1--W2 & Hoàn thiện proposal, nghiên cứu tài liệu và xác định phạm vi hệ thống. & D1 \\ \hline
+W3--W5 & Xây dựng prototype BI Agent và các cơ chế kiểm soát truy cập cơ bản. & Prototype \\ \hline
+W6--W7 & Tích hợp các cơ chế bảo mật và hoàn thiện luồng end-to-end. & D2 \\ \hline
+W8--W9 & Xây dựng task set, security tests và thực hiện đánh giá định lượng. & Evaluation \\ \hline
+W10--W11 & Red-team testing, kiểm chứng với người dùng và hoàn thiện hệ thống. & Final System \\ \hline
+W12--W13 & Hoàn thiện báo cáo, tài liệu và chuẩn bị bảo vệ. & D3/D4 \\ \hline
+\end{tabular}
+\caption{Project timeline.}
+\end{table}
+
+
+\subsection{Rủi ro \& Phạm vi dự phòng}
+
+\begin{itemize}
+\item \textbf{Độ phức tạp của Agent hoặc chi phí thực thi vượt dự kiến:} Ưu tiên các tác vụ phân tích cốt lõi và giảm phạm vi các tính năng nâng cao nếu cần.
+
+\item \textbf{Khó khăn trong việc xây dựng môi trường thực thi an toàn:} Sử dụng cơ chế isolation đơn giản hơn làm fallback, trong khi vẫn đảm bảo các nguyên tắc bảo mật cốt lõi.
+
+\item \textbf{Khó khăn trong việc thu thập dữ liệu thực tế:} Sử dụng benchmark và synthetic datasets để đảm bảo khả năng đánh giá trong phạm vi dự án.
+
+\end{itemize}
+
+\section{Cam kết sử dụng AI (AI-Use Statement)}
+
+AI được sử dụng như một công cụ hỗ trợ nhóm trong quá trình nghiên cứu tài liệu, phát triển ý tưởng, lập kế hoạch và hỗ trợ lập luận kỹ thuật. Các quyết định về bài toán, đóng góp, phương pháp đánh giá và thiết kế hệ thống đều được các thành viên trong nhóm rà soát và chịu trách nhiệm. Nhóm đảm bảo việc sử dụng AI tuân thủ các quy định của môn học.
